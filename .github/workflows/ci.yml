@@ -23,7 +23,7 @@ jobs:
           python-version: "3.x"
 
       - name: Install dependencies.
-        run: pip3 install yamllint ansible-lint ansible "molecule[lint,docker]"
+        run: pip install yamllint ansible-lint ansible "molecule[lint,docker]"
 
       - name: Install Galaxy dependencies.
         run: ansible-galaxy collection install community.docker
