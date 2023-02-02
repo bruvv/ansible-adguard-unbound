@@ -6,24 +6,36 @@ name: CI
     branches:
       - main
 
-defaults:
-  run:
-    working-directory: "adguard"
+# defaults:
+#   run:
+#     working-directory: "adguard"
 
 jobs:
   molecule:
+    name: Molecule
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro:
+          - rockylinux9
+          - rockylinux8
+          - ubuntu2204
+          - debian11
     steps:
-      - name: Checkout
+      - name: Check out the codebase.
         uses: actions/checkout@v3
+        # with:
+        #   path: "adguard"
 
-      - name: Set up Python
+      - name: Set up Python 3.
         uses: actions/setup-python@v4
         with:
           python-version: "3.x"
 
-      - name: Install dependencies.
-        run: pip install yamllint ansible-lint ansible "molecule[lint,docker]"
+      - name: Install test dependencies.
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install ansible docker 'molecule[docker]' ansible-lint yamllint flake8
 
       - name: Install Galaxy dependencies.
         run: ansible-galaxy collection install community.docker
