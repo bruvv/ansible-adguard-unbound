@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Set your private key
-declare priv_key="$HOME/.ssh/id_ed25519_voorn"
+declare priv_key="$HOME/.ssh/keyhere"
 declare ssh_user="vagrant" # change this first!
 
 declare -a servers_to_manager=(

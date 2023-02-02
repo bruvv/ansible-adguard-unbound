@@ -1,0 +1,55 @@
+---
+name: CI
+"on":
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  molecule:
+    name: Molecule
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro:
+          - rockylinux9
+          - rockylinux8
+          - ubuntu2204
+          - debian11
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install test dependencies.
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install ansible docker 'molecule[docker]' ansible-lint yamllint flake8
+
+      - name: Run Molecule tests.
+        run: molecule test
+        env:
+          PY_COLORS: "1"
+          ANSIBLE_FORCE_COLOR: "1"
+          MOLECULE_DISTRO: ${{ matrix.distro }}
+
+  release:
+    needs: molecule
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - uses: phish108/autotag-action@1.1.53
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN}}
+          with-v: true
+      - name: galaxy
+        uses: robertdebock/galaxy-action@1.2.1
+        with:
+          galaxy_api_key: ${{ secrets.galaxy_api_key }}
+          git_branch: main
