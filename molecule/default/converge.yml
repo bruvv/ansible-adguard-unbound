@@ -1,32 +1,32 @@
----
-- name: Converge
-  hosts: all
-  become: true
+# ---
+# - name: Converge
+#   hosts: all
+#   become: true
 
-  pre_tasks:
-    - name: Update apt cache.
-      ansible.builtin.apt:
-        update_cache: true
-        cache_valid_time: 600
-        upgrade: true
-      when: ansible_os_family == 'Debian'
+#   pre_tasks:
+#     - name: Update apt cache.
+#       ansible.builtin.apt:
+#         update_cache: true
+#         cache_valid_time: 600
+#         upgrade: true
+#       when: ansible_os_family == 'Debian'
 
-    - name: Update apt cache.
-      ansible.builtin.dnf:
-        update_cache: true
-      when: ansible_os_family == 'RedHat'
+#     - name: Update apt cache.
+#       ansible.builtin.dnf:
+#         update_cache: true
+#       when: ansible_os_family == 'RedHat'
 
-    - name: Wait for systemd to complete initialization. # noqa 303
-      ansible.builtin.command: systemctl is-system-running
-      register: systemctl_status
-      until: >
-        'running' in systemctl_status.stdout or
-        'degraded' in systemctl_status.stdout
-      retries: 30
-      delay: 5
-      when: ansible_service_mgr == 'systemd'
-      changed_when: false
-      failed_when: systemctl_status.rc > 1
+#     - name: Wait for systemd to complete initialization. # noqa 303
+#       ansible.builtin.command: systemctl is-system-running
+#       register: systemctl_status
+#       until: >
+#         'running' in systemctl_status.stdout or
+#         'degraded' in systemctl_status.stdout
+#       retries: 30
+#       delay: 5
+#       when: ansible_service_mgr == 'systemd'
+#       changed_when: false
+#       failed_when: systemctl_status.rc > 1
 
-  roles:
-    - role: docker
+#   roles:
+#     - role: docker
