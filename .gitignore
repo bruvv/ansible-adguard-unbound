@@ -351,6 +351,5 @@ MigrationBackup/
 
 *.retry
 .vagrant/
-roles/adguard-setup/files/.env
 terraform.tfstate
 .DS_Store

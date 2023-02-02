@@ -3,7 +3,7 @@
 # Ensure user 'ansible' exists on remote host
 ensure_local_ansible_user() {
     local -a public_keys=(
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAvMq7aVqiYT3rt+cZNtv6NaayZ6PgRF8YZBkR2IXhS7 niels.voorn@voorn-key-default"
+        "paste key here"
     )
 
     if ! id -u ansible >/dev/null 2>&1; then
