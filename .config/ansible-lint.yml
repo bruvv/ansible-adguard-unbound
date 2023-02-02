@@ -1,0 +1,6 @@
+warn_list:
+  - "207"
+  - "meta-incorrect"
+  - "meta-no-info"
+  - "role-name"
+  - "schema[meta]"
