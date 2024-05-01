@@ -29,4 +29,3 @@ firewall_enable_ipv6: false
 # Allow only the IP 167.89.89.18 to access port 22 (ssh).
 # firewall_ip6_additional_rules: []
 # firewall_log_dropped_packets: true
-

@@ -353,3 +353,4 @@ MigrationBackup/
 .vagrant/
 terraform.tfstate
 .DS_Store
+.vscode/settings.json
